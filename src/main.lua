@@ -1,5 +1,5 @@
-local base = loadfile("base.bin")
-local dados
+local base = require "base"
+local gui = require "gui"
 local dx = 1
 local dy = 0
 StartPopulation()
