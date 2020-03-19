@@ -1,23 +1,24 @@
-gl = require("moongl")
-glfw = require("moonglfw")
+Gl = require("moongl")
+Glfw = require("moonglfw")
 
-glfw.window_hint('context version major', 3)
-glfw.window_hint('context version minor', 3)
-glfw.window_hint('opengl profile', 'core')
-glfw.window_hint('maximized', true)
+Glfw.window_hint('context version major', 3)
+Glfw.window_hint('context version minor', 3)
+Glfw.window_hint('opengl profile', 'core')
+Glfw.window_hint('maximized', true)
 
-window = glfw.create_window(1024, 768, "MoonlitEvolution")
-glfw.make_context_current(window)
-gl.init()
+Window = Glfw.create_window(1024, 768, "MoonlitEvolution")
+Glfw.make_context_current(Window)
+Gl.init()
 
-function reshape(_, w, h) 
-   gl.viewport(0, 0, w, h)
+function Reshape(_, w, h) 
+   Gl.viewport(0, 0, w, h)
 end
-glfw.set_window_size_callback(window, reshape)
+Glfw.set_window_size_callback(Window, Reshape)
 
-while not glfw.window_should_close(window) do
-   glfw.poll_events()
+while not Glfw.window_should_close(Window) do
+   Glfw.poll_events()
   --LETS SEE
-   gl.clear_color(0.4, 0.4, 0.4, 0.0)
-   gl.clear("color", "depth")
+   Gl.clear_color(0.4, 0.4, 0.4, 0.0)
+   Gl.clear("color", "depth")
+   Glfw.swap_buffers(Window)
 end
