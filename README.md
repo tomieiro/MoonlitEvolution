@@ -1,7 +1,7 @@
 # MoonlitEvolution
 Projeto de algoritmos evolutivos usando Lua
 
-**Este projeto tem por objetivo aplicar -através da linguagem Lua-, com fim de ilustrar, algoritmos evolutivos com uma simples interface,usando OpenGL.**
+**Este projeto tem por objetivo aplicar -através da linguagem Lua-, com fim de ilustrar, algoritmos evolutivos com uma simples interface,utilizando FLTK.**
 
 Para a GUI em Lua, utilizei a lib: MoonFLTK(https://github.com/stetre/moonfltk)
 
