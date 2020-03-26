@@ -37,7 +37,6 @@ function plotaGrafico()
             fl.vertex(fl.transform_x(i*(TAM_AMBIENTE/(10*(TAM_AMBIENTE/100)^2)),i),420+(-fl.transform_y(Base.FxEq(i),Base.FxEq(i)*(TAM_AMBIENTE/((TAM_AMBIENTE*1.8)/MAXY)))))
         end
         fl.end_line()
-        fl.begin_line()
         fl.pop_matrix()
         fl.pop_clip()
     end)
@@ -51,17 +50,19 @@ function plotaPontos()
         fl.push_matrix()
         fl.translate(8,200)
         fl.color(fl.RED)
-        fl.begin_points()
         for i=1, TAMPOPULATION do
             fl.circle(fl.transform_x(POPULATION[i]*(TAM_AMBIENTE/(10*(TAM_AMBIENTE/100)^2)),POPULATION[i]),420+(-fl.transform_y(F[i],F[i]*(TAM_AMBIENTE/((TAM_AMBIENTE*1.8)/MAXY)))),RPONTOS)
         end
-        fl.end_points()
-        fl.begin_line()
         fl.pop_matrix()
         fl.pop_clip()
     end)
     return self
 end
+
+function clearPoints(obj)
+
+end
+
 
 function instGui()
     local w, h, positions
@@ -114,7 +115,6 @@ function startPop()
     GERACAO = 1
     Base.StartPopulation()
     gen:label("G: "..tostring(GERACAO))
-    PONTOS:redraw()
     BESTI:label("Melhor: "..string.format("%0.6f", Base.FxEq(POPULATION[MELHOR])))
     BESTI:redraw()
     THEBEST:label("THE BEST: "..string.format("%0.6f", THEBESTOFTHEBEST[2]))
@@ -126,24 +126,26 @@ function startPop()
     bAutoEvolve:activate()
     bStart:deactivate()
     PopAdj:deactivate()
+    PONTOS:redraw()
 end
 
 function evolve()
     GERACAO = GERACAO + 1
     gen:label("G: "..tostring(GERACAO))
     Base.Evolve()
-    PONTOS:redraw()
     BESTI:label("Melhor: "..string.format("%0.6f",F[MELHOR]))
     BESTI:redraw()
     THEBEST:label("THE BEST: "..string.format("%0.6f", THEBESTOFTHEBEST[2]))
     THEBEST:redraw()
     MUT:label("Mutacao: "..string.format("%0.6f", MUTACAO))
     MUT:redraw()
+    PONTOS:redraw()
 end
 
 function autoEvolve()
     for i=1, FASTEVOLVE do
         evolve()
+    PONTOS:redraw()
     end
 end
 

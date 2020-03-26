@@ -45,7 +45,6 @@ function Base.StartPopulation()
   for x=1, TAMPOPULATION do
     F[x] = Base.FxEq(POPULATION[x])
   end
-  Base.Avaliacao()
 end
 
 
