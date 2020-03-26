@@ -1,5 +1,5 @@
 --SETAMOS PRIMEIRAMENTE, AS VARIAVEIS IMPORTANTES QUE PODEM SER ALTERADAS DURANTE OS TESTES
-TAMPOPULATION = 200
+TAMPOPULATION = 10
 THEBESTOFTHEBEST = {1,0}
 MELHOR = 1
 POPULATION = {}
@@ -12,7 +12,7 @@ TXMVAR = 0.00001
 GERACAO = 0
 MAXY= 25
 RPONTOS = 3
-FASTEVOLVE = 100
+FASTEVOLVE = 10
 
 --OBJETOS DA GUI
 PONTOS = nil
@@ -91,7 +91,7 @@ function instGui()
     MUT = fl.box("rshadow box",1030, 115, 110, 30 ,"Mutacao: ".."None")
     MUT:labelsize(10)
 
-    MutAdj = fl.slider(1040, 155, 30, 210,"AutoGen="..FASTEVOLVE)
+    MutAdj = fl.slider(1040, 155, 30, 210,"FastEvl="..FASTEVOLVE)
     MutAdj:slider("gtk thin down box")
     MutAdj:bounds(10,10000)
     MutAdj:color(fl.DARK3)
@@ -101,7 +101,7 @@ function instGui()
 
     PopAdj = fl.slider(1100, 155, 30, 210,"TamPop="..TAMPOPULATION)
     PopAdj:slider("gtk thin down box")
-    PopAdj:bounds(1,1000)
+    PopAdj:bounds(10,1000)
     PopAdj:color(fl.DARK3)
     PopAdj:type("vertical fill")
     PopAdj:value(1000)
@@ -114,7 +114,6 @@ function startPop()
     GERACAO = 1
     Base.StartPopulation()
     gen:label("G: "..tostring(GERACAO))
-    gen:redraw()
     PONTOS:redraw()
     BESTI:label("Melhor: "..string.format("%0.6f", Base.FxEq(POPULATION[MELHOR])))
     BESTI:redraw()
@@ -132,7 +131,6 @@ end
 function evolve()
     GERACAO = GERACAO + 1
     gen:label("G: "..tostring(GERACAO))
-    gen:redraw()
     Base.Evolve()
     PONTOS:redraw()
     BESTI:label("Melhor: "..string.format("%0.6f",F[MELHOR]))
@@ -150,10 +148,14 @@ function autoEvolve()
 end
 
 function autoEvolveAdjListener(s)
-    FASTEVOLVE = math.floor(s:value())
+    FASTEVOLVE = 10010 - math.floor(s:value())
     s:label("FastEvl:"..FASTEVOLVE)
 end
 
+function PopAdjListener(s)
+    TAMPOPULATION = 1010-math.floor(s:value())
+    s:label("TamPop:"..TAMPOPULATION)
+end
 
 instGui()
 Base.InitialEnv()
@@ -163,6 +165,7 @@ bEvolve:callback(evolve)
 bAutoEvolve:callback(autoEvolve)
 bKill:callback(Base.Extincao)
 MutAdj:callback(autoEvolveAdjListener)
+PopAdj:callback(PopAdjListener)
 janela:done()
 janela:show()
 return fl:run()
