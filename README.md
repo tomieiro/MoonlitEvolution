@@ -5,6 +5,8 @@ Projeto de algoritmos evolutivos usando Lua
 
 Para a GUI em Lua, utilizei a lib: MoonFLTK(https://github.com/stetre/moonfltk)
 
-Além disso, utilizamos libs necessárias: liblua5.3-dev(https://www.lua.org/) libfltk1.3-dev(https://www.fltk.org/)
-Para instalá-las, use: "make INSTALL_LIBS". Depois acesse os dois link citados acimas para instalar os módulos.
+Além disso, utilizamos libs necessárias: liblua5.3-dev(https://www.lua.org/), libfltk1.3-dev(https://www.fltk.org/) e os próprios binarios de lua(https://www.lua.org/).
+
+
+Para instalá-las, use: "make INSTALL_COMPONENTS". Depois acesse os dois link citados acimas para instalar os módulos.
 
