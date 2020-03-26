@@ -1,15 +1,11 @@
-TAMPOPULATION = 100
-THEBESTOFTHEBEST = {1,0}
-MELHOR = 1
-POPULATION = {}
-F = {}
-MUTACAO = 0.002 --0.2%
-TAM_AMBIENTE = 120
-PONTO = {{0,0},{0,0}}
-MUTACAO_VARIAVEL = true
+Base = {}
 
-function FxEq(x)
+function Base.FxEq(x,max,min)
   return (2*math.cos(0.39*x)) + (5*math.sin(0.5*x)) + (0.5*math.cos(0.1*x)) + (10*math.sin(0.7*x)) + (5*math.sin(1*x)) + (5*math.sin(0.35*x))
+end
+
+function Base.max_min()
+  return 
 end
 
 
@@ -20,30 +16,30 @@ function Sleep (a)
 end
 
 
-function Avaliacao()
+function Base.Avaliacao()
   for x=1, TAMPOPULATION do
     if F[x] > F[MELHOR] then MELHOR = x end
   end
-  if THEBESTOFTHEBEST[2] < FxEq(MELHOR) then
+  if THEBESTOFTHEBEST[2] < Base.FxEq(MELHOR) then
     THEBESTOFTHEBEST[1] = POPULATION[MELHOR]
-    THEBESTOFTHEBEST[2] = FxEq(MELHOR)
+    THEBESTOFTHEBEST[2] = Base.FxEq(MELHOR)
   end
 end
 
 
-function StartPopulation()
+function Base.StartPopulation()
   math.randomseed(os.time())
   for i=1, TAMPOPULATION do
     POPULATION[i] = math.random(0, TAM_AMBIENTE)
   end
   for x=1, TAMPOPULATION do
-    F[x] = FxEq(POPULATION[x])
+    F[x] = Base.FxEq(POPULATION[x])
   end
-  Avaliacao()
+  Base.Avaliacao()
 end
 
 
-function Transa()
+function Base.Transa()
   for x=1, TAMPOPULATION do
       if x ~= MELHOR then
         POPULATION[x] = (POPULATION[x]+POPULATION[MELHOR])/2
@@ -58,13 +54,36 @@ function Transa()
         POPULATION[x] = (0+math.abs(aux-TAM_AMBIENTE))%TAMPOPULATION
       end
     end
-    F[x] = FxEq(POPULATION[x])
+    F[x] = Base.FxEq(POPULATION[x])
   end
 end
 
-function Extincao()
+function Base.Extincao()
   for i=1, TAMPOPULATION do
     POPULATION[i] = math.random(TAM_AMBIENTE)
   end
   MUTACAO = 0.02
 end
+
+--Funcao que evolui
+function Base.Evolve()
+  local dx = 1
+  local dy = 0
+  Base.Avaliacao()
+  PONTO[1] = {POPULATION[MELHOR],Base.FxEq(MELHOR)}
+  Base.Transa()
+  if MUTACAO_VARIAVEL then
+      dy = (PONTO[2][2] or 1) -(PONTO[1][2] or 1)
+      dy = (PONTO[2][1] or 1) -(PONTO[1][1] or 1)
+      if math.abs(dy/dx) <= TXMVAR*(MUTACAO/0.002) and math.abs(dy/dx) ~= 0 then --trancou
+          MUTACAO = MUTACAO * 2
+      end
+      if MUTACAO < 0.000000001 or MUTACAO > 100000 then --saturacao
+          Extincao()
+      end
+  end
+  PONTO[2] = PONTO[1]
+  return 
+end
+
+return Base
