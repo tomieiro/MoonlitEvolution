@@ -8,7 +8,7 @@ MUTACAO = 0.002 --0.2%
 TAM_AMBIENTE = 300
 PONTO = {{0,0},{0,0}}
 MUTACAO_VARIAVEL = true
-TXMVAR = 0.00001
+TXMVAR = 0.0001
 GERACAO = 0
 MAXY= 25
 RPONTOS = 3
@@ -60,11 +60,6 @@ function plotaPontos()
     end)
     return self
 end
-
-function clearPoints(obj)
-
-end
-
 
 function instGui()
     local w, h, positions
