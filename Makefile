@@ -6,7 +6,7 @@ compile:
 	@luac5.3 -o bin/main.o src/main.lua
 
 libs:
-	sudo apt install liblua5.3-dev libglfw3-dev
+	sudo apt install liblua5.3-dev libfltk1.3-dev
 
 clean:
 	@rm bin/*.o

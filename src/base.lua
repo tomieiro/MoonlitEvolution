@@ -1,15 +1,15 @@
 Base = {}
 
-function Base.FxEq(x,max,min)
+function Base.FxEq(x)
   return (2*math.cos(0.39*x)) + (5*math.sin(0.5*x)) + (0.5*math.cos(0.1*x)) + (10*math.sin(0.7*x)) + (5*math.sin(1*x)) + (5*math.sin(0.35*x))
 end
 
 function Base.max_min()
-  return 
+  return -25, 25
 end
 
 
-function Sleep (a) 
+function Base.Sleep (a) 
   local sec = tonumber(os.clock() + a); 
   while (os.clock() < sec) do 
   end 
@@ -20,9 +20,19 @@ function Base.Avaliacao()
   for x=1, TAMPOPULATION do
     if F[x] > F[MELHOR] then MELHOR = x end
   end
-  if THEBESTOFTHEBEST[2] < Base.FxEq(MELHOR) then
+  if THEBESTOFTHEBEST[2] < F[MELHOR] then
     THEBESTOFTHEBEST[1] = POPULATION[MELHOR]
-    THEBESTOFTHEBEST[2] = Base.FxEq(MELHOR)
+    THEBESTOFTHEBEST[2] = F[MELHOR]
+  end
+end
+
+function Base.InitialEnv()
+  math.randomseed(os.time())
+  for i=1, TAMPOPULATION do
+    POPULATION[i] = -10
+  end
+  for x=1, TAMPOPULATION do
+    F[x] = -10
   end
 end
 
@@ -79,7 +89,7 @@ function Base.Evolve()
           MUTACAO = MUTACAO * 2
       end
       if MUTACAO < 0.000000001 or MUTACAO > 100000 then --saturacao
-          Extincao()
+          Base.Extincao()
       end
   end
   PONTO[2] = PONTO[1]
