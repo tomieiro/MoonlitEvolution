@@ -51,7 +51,7 @@ end
 function Base.Transa()
   for x=1, TAMPOPULATION do
       if x ~= MELHOR then
-        POPULATION[x] = (POPULATION[x]+POPULATION[MELHOR])/2
+        POPULATION[x] = (POPULATION[x]+POPULATION[MELHOR]+THEBESTOFTHEBEST[1]*0.618)/3
       end
     local aux = (POPULATION[x] + (math.random(-TAM_AMBIENTE,TAM_AMBIENTE)*(MUTACAO)))
     if aux < TAM_AMBIENTE and aux > 0 then
@@ -60,7 +60,7 @@ function Base.Transa()
       if aux > TAM_AMBIENTE then
         POPULATION[x] = (TAM_AMBIENTE-math.abs(aux-TAM_AMBIENTE))%TAMPOPULATION
       else
-        POPULATION[x] = (0+math.abs(aux-TAM_AMBIENTE))%TAMPOPULATION
+        POPULATION[x] = (math.abs(aux-TAM_AMBIENTE))%TAMPOPULATION
       end
     end
     F[x] = Base.FxEq(POPULATION[x])
@@ -68,9 +68,7 @@ function Base.Transa()
 end
 
 function Base.Extincao()
-  for i=1, TAMPOPULATION do
-    POPULATION[i] = math.random(TAM_AMBIENTE)
-  end
+  Base.StartPopulation()
   MUTACAO = 0.02
 end
 

@@ -1,11 +1,11 @@
 --SETAMOS PRIMEIRAMENTE, AS VARIAVEIS IMPORTANTES QUE PODEM SER ALTERADAS DURANTE OS TESTES
 TAMPOPULATION = 10
-THEBESTOFTHEBEST = {1,0}
+THEBESTOFTHEBEST = {-10,-10}
 MELHOR = 1
 POPULATION = {}
 F = {}
 MUTACAO = 0.002 --0.2%
-TAM_AMBIENTE = 200
+TAM_AMBIENTE = 300
 PONTO = {{0,0},{0,0}}
 MUTACAO_VARIAVEL = true
 TXMVAR = 0.00001
@@ -27,7 +27,7 @@ function plotaGrafico()
     local self = fl.widget_sub(10,45,(1024-15),(768-15))
     self:override_draw(function()
         fl.push_clip(10,45,(1024-15),(768-15))
-        fl.color(fl.DARK2)
+        fl.color(fl.DARK3)
         fl.rectf(10,45,(1024-15),(768-15))
         fl.push_matrix()
         fl.translate(8,200)
@@ -53,6 +53,8 @@ function plotaPontos()
         for i=1, TAMPOPULATION do
             fl.circle(fl.transform_x(POPULATION[i]*(TAM_AMBIENTE/(10*(TAM_AMBIENTE/100)^2)),POPULATION[i]),420+(-fl.transform_y(F[i],F[i]*(TAM_AMBIENTE/((TAM_AMBIENTE*1.8)/MAXY)))),RPONTOS)
         end
+        fl.color(fl.YELLOW)
+        fl.circle(fl.transform_x(THEBESTOFTHEBEST[1]*(TAM_AMBIENTE/(10*(TAM_AMBIENTE/100)^2)),THEBESTOFTHEBEST[1]),420+(-fl.transform_y(THEBESTOFTHEBEST[2],THEBESTOFTHEBEST[2]*(TAM_AMBIENTE/((TAM_AMBIENTE*1.8)/MAXY)))),RPONTOS)
         fl.pop_matrix()
         fl.pop_clip()
     end)
@@ -139,14 +141,16 @@ function evolve()
     THEBEST:redraw()
     MUT:label("Mutacao: "..string.format("%0.6f", MUTACAO))
     MUT:redraw()
+    janela:redraw()
     PONTOS:redraw()
 end
 
 function autoEvolve()
     for i=1, FASTEVOLVE do
         evolve()
-    PONTOS:redraw()
     end
+    janela:redraw()
+    PONTOS:redraw()
 end
 
 function autoEvolveAdjListener(s)
@@ -159,16 +163,24 @@ function PopAdjListener(s)
     s:label("TamPop:"..TAMPOPULATION)
 end
 
-instGui()
-Base.InitialEnv()
-PONTOS = plotaPontos()
-bStart:callback(startPop)
-bEvolve:callback(evolve)
-bAutoEvolve:callback(autoEvolve)
-bKill:callback(Base.Extincao)
-MutAdj:callback(autoEvolveAdjListener)
-PopAdj:callback(PopAdjListener)
-janela:done()
-janela:show()
-return fl:run()
---fl.unreference(PONTOS)
+function extintionListener()
+    Base.Extincao()
+    janela:redraw()
+    PONTOS:redraw()
+end
+
+function Main()
+    instGui()
+    Base.InitialEnv()
+    PONTOS = plotaPontos()
+    bStart:callback(startPop)
+    bEvolve:callback(evolve)
+    bAutoEvolve:callback(autoEvolve)
+    bKill:callback(extintionListener)
+    MutAdj:callback(autoEvolveAdjListener)
+    PopAdj:callback(PopAdjListener)
+    janela:done()
+    janela:show()
+    return fl:run()
+end
+Main()
