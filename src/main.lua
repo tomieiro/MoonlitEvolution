@@ -89,13 +89,13 @@ function instGui()
     MUT = fl.box("rshadow box",1030, 115, 110, 30 ,"Mutacao: ".."None")
     MUT:labelsize(10)
 
-    MutAdj = fl.slider(1040, 155, 30, 210,"FastEvl="..FASTEVOLVE)
-    MutAdj:slider("gtk thin down box")
-    MutAdj:bounds(10,10000)
-    MutAdj:color(fl.DARK3)
-    MutAdj:type("vertical fill")
-    MutAdj:value(10000)
-    MutAdj:labelsize(8)
+    AutoEvolveAdj = fl.slider(1040, 155, 30, 210,"FastEvl="..FASTEVOLVE)
+    AutoEvolveAdj:slider("gtk thin down box")
+    AutoEvolveAdj:bounds(10,10000)
+    AutoEvolveAdj:color(fl.DARK3)
+    AutoEvolveAdj:type("vertical fill")
+    AutoEvolveAdj:value(10000)
+    AutoEvolveAdj:labelsize(8)
 
     PopAdj = fl.slider(1100, 155, 30, 210,"TamPop="..TAMPOPULATION)
     PopAdj:slider("gtk thin down box")
@@ -104,7 +104,23 @@ function instGui()
     PopAdj:type("vertical fill")
     PopAdj:value(1000)
     PopAdj:labelsize(8)
+
+    EnvAdj = fl.slider(1040, 400, 30, 210,"AmbAdj="..TAM_AMBIENTE)
+    EnvAdj:slider("gtk thin down box")
+    EnvAdj:bounds(10,1000)
+    EnvAdj:color(fl.DARK3)
+    EnvAdj:type("vertical fill")
+    EnvAdj:value(1000)
+    EnvAdj:labelsize(8)
     
+    MutAdj = fl.slider(1100, 400, 30, 210,"TxMt="..TXMVAR)
+    MutAdj:slider("gtk thin down box")
+    MutAdj:bounds(0.00001,0.001)
+    MutAdj:color(fl.DARK3)
+    MutAdj:type("vertical fill")
+    MutAdj:value(1000)
+    MutAdj:labelsize(8) 
+
     plotaGrafico()
 end
 
@@ -118,11 +134,16 @@ function startPop()
     THEBEST:redraw()
     MUT:label("Mutacao: "..string.format("%0.6f", MUTACAO))
     MUT:redraw()
+    EnvAdj:label("Amb="..TAM_AMBIENTE)
+    EnvAdj:redraw()
+    MutAdj:label("TxMt="..string.format("%0.4f", TXMVAR))
+    MutAdj:redraw()
     bEvolve:activate()
     bKill:activate()
     bAutoEvolve:activate()
     bStart:deactivate()
     PopAdj:deactivate()
+    EnvAdj:deactivate()
     PONTOS:redraw()
 end
 
@@ -136,16 +157,16 @@ function evolve()
     THEBEST:redraw()
     MUT:label("Mutacao: "..string.format("%0.6f", MUTACAO))
     MUT:redraw()
-    janela:redraw()
     PONTOS:redraw()
+    janela:redraw()
 end
 
 function autoEvolve()
     for i=1, FASTEVOLVE do
         evolve()
-    end
-    janela:redraw()
-    PONTOS:redraw()
+        PONTOS:redraw()
+        janela:redraw()
+    end 
 end
 
 function autoEvolveAdjListener(s)
@@ -156,6 +177,16 @@ end
 function PopAdjListener(s)
     TAMPOPULATION = 1010-math.floor(s:value())
     s:label("TamPop:"..TAMPOPULATION)
+end
+
+function EnvAdjListener(s)
+    TAM_AMBIENTE = 1010-math.floor(s:value())
+    s:label("Amb="..TAM_AMBIENTE)
+end
+
+function MutAdjListener(s)
+    TXMVAR = s:value()
+    s:label("TxMt:"..string.format("%0.6f", TXMVAR))
 end
 
 function extintionListener()
@@ -172,8 +203,10 @@ function Main()
     bEvolve:callback(evolve)
     bAutoEvolve:callback(autoEvolve)
     bKill:callback(extintionListener)
-    MutAdj:callback(autoEvolveAdjListener)
+    AutoEvolveAdj:callback(autoEvolveAdjListener)
     PopAdj:callback(PopAdjListener)
+    MutAdj:callback(MutAdjListener)
+    EnvAdj:callback(EnvAdjListener)
     janela:done()
     janela:show()
     return fl:run()
