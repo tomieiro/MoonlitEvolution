@@ -14,6 +14,7 @@ MAXY= 25
 RPONTOS = 3
 FASTEVOLVE = 10
 
+
 --OBJETOS DA GUI
 PONTOS = nil
 
@@ -78,6 +79,7 @@ function instGui()
     botoes:insert(bEvolve,2)
     botoes:insert(bKill,3)
     botoes:insert(bAutoEvolve,4)
+
     gen = fl.box("rshadow box",550, 5, 585, 26 ,"G: "..tostring(GERACAO))
     
     BESTI = fl.box("rshadow box",1030, 45, 110, 30 ,"Melhor: ".."None")
@@ -199,6 +201,7 @@ function Main()
     instGui()
     Base.InitialEnv()
     PONTOS = plotaPontos()
+
     bStart:callback(startPop)
     bEvolve:callback(evolve)
     bAutoEvolve:callback(autoEvolve)
@@ -207,6 +210,7 @@ function Main()
     PopAdj:callback(PopAdjListener)
     MutAdj:callback(MutAdjListener)
     EnvAdj:callback(EnvAdjListener)
+    
     janela:done()
     janela:show()
     return fl:run()

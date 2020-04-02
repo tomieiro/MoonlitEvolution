@@ -4,17 +4,6 @@ function Base.FxEq(x)
   return (2*math.cos(0.39*x)) + (5*math.sin(0.5*x)) + (0.5*math.cos(0.1*x)) + (10*math.sin(0.7*x)) + (5*math.sin(1*x)) + (5*math.sin(0.35*x))
 end
 
-function Base.max_min()
-  return -25, 25
-end
-
-
-function Base.Sleep (a) 
-  local sec = tonumber(os.clock() + a); 
-  while (os.clock() < sec) do 
-  end 
-end
-
 
 function Base.Avaliacao()
   for x=1, TAMPOPULATION do
@@ -25,6 +14,7 @@ function Base.Avaliacao()
     THEBESTOFTHEBEST[2] = F[MELHOR]
   end
 end
+
 
 function Base.InitialEnv()
   math.randomseed(os.time())
@@ -51,7 +41,7 @@ end
 function Base.Transa()
   for x=1, TAMPOPULATION do
       if x ~= MELHOR then
-        POPULATION[x] = (POPULATION[x]+POPULATION[MELHOR]+THEBESTOFTHEBEST[1]*0.618)/3
+        POPULATION[x] = (POPULATION[x]+POPULATION[MELHOR]+(THEBESTOFTHEBEST[1]*0.618))/3
       end
     local aux = (POPULATION[x] + (math.random(-TAM_AMBIENTE,TAM_AMBIENTE)*(MUTACAO)))
     if aux < TAM_AMBIENTE and aux > 0 then
@@ -69,7 +59,7 @@ end
 
 function Base.Extincao()
   Base.StartPopulation()
-  MUTACAO = 0.02
+  MUTACAO = 0.002
 end
 
 --Funcao que evolui
@@ -81,11 +71,11 @@ function Base.Evolve()
   Base.Transa()
   if MUTACAO_VARIAVEL then
       dy = (PONTO[2][2] or 1) -(PONTO[1][2] or 1)
-      dy = (PONTO[2][1] or 1) -(PONTO[1][1] or 1)
+      dx = (PONTO[2][1] or 1) -(PONTO[1][1] or 1)
       if math.abs(dy/dx) <= TXMVAR*(MUTACAO/0.002) and math.abs(dy/dx) ~= 0 then --trancou
           MUTACAO = MUTACAO * 2
       end
-      if MUTACAO < 0.000000001 or MUTACAO > 100000 then --saturacao
+      if MUTACAO > 100000 then --saturacao
           Base.Extincao()
       end
   end
