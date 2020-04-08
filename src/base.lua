@@ -8,6 +8,7 @@ end
 function Base.Avaliacao()
   for x=1, TAMPOPULATION do
     if F[x] > F[MELHOR] then MELHOR = x end
+    if F[x] > F[PIOR] then PIOR = x end
   end
   if THEBESTOFTHEBEST[2] < F[MELHOR] then
     THEBESTOFTHEBEST[1] = POPULATION[MELHOR]
@@ -62,6 +63,10 @@ function Base.Extincao()
   MUTACAO = 0.002
 end
 
+function Base.Predacao()
+  POPULATION[PIOR] = math.random(0, TAM_AMBIENTE)
+end
+
 --Funcao que evolui
 function Base.Evolve()
   local dx = 1
@@ -80,6 +85,7 @@ function Base.Evolve()
       end
   end
   PONTO[2] = PONTO[1]
+  Base.Predacao()
   return 
 end
 
