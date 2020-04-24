@@ -102,33 +102,6 @@ function instGui()
     AutoEvolveAdj:value(10)
     AutoEvolveAdj:labelsize(10)
 
-    --[[
-    PopAdj = fl.slider(600, 155, 30, 110,"TamPop="..TAMPOPULATION)
-    PopAdj:slider("gtk thin down box")
-    PopAdj:bounds(10,1000)
-    PopAdj:color(fl.DARK3)
-    PopAdj:type("vertical fill")
-    PopAdj:value(10)
-    PopAdj:labelsize(8)
-    PopAdj:deactivate()
-
-    EnvAdj = fl.slider(600, 155, 30, 110,"AmbAdj="..TAM_AMBIENTE)
-    EnvAdj:slider("gtk thin down box")
-    EnvAdj:bounds(10,1000)
-    EnvAdj:color(fl.DARK3)
-    EnvAdj:type("vertical fill")
-    EnvAdj:value(10)
-    EnvAdj:labelsize(8)
-    
-
-    MutAdj = fl.slider(600, 355, 30, 110,"TxMt="..TXMVAR)
-    MutAdj:slider("gtk thin down box")
-    MutAdj:bounds(0.00001,0.001)
-    MutAdj:color(fl.DARK3)
-    MutAdj:type("vertical fill")
-    MutAdj:value(0.00001)
-    MutAdj:labelsize(8) 
-    ]]--
     janela:insert(botoes,1)
     plotaGrafico()
 end
@@ -144,16 +117,10 @@ function startPop()
     THEBEST:redraw()
     MUT:label("Mutacao: "..string.format("%0.4f", MUTACAO))
     MUT:redraw()
-    --EnvAdj:label("Amb="..TAM_AMBIENTE)
-    --EnvAdj:redraw()
-    --MutAdj:label("TxMt="..string.format("%0.4f", TXMVAR))
-    --MutAdj:redraw()
     bEvolve:activate()
     bKill:activate()
     bAutoEvolve:activate()
     bStart:deactivate()
-    --PopAdj:deactivate()
-    --EnvAdj:deactivate()
     PONTOS:redraw()
 end
 
@@ -191,18 +158,6 @@ function PopAdjListener(s)
     TAMPOPULATION = math.floor(s:value())
     s:label("TamPop:"..TAMPOPULATION)
 end
---[[
-function MutAdjListener(s)
-    TXMVAR = s:value()
-    s:label("TxMt:"..string.format("%0.4f", TXMVAR+0.0001))
-end
-
-function EnvAdjListener(s)
-    TAM_AMBIENTE = math.floor(s:value())
-    s:label("Amb="..TAM_AMBIENTE)
-end
-
-]]--
 
 function extintionListener()
     Base.Extincao()
@@ -235,9 +190,6 @@ function confirmaParametrosManual(s)
     bAutoEvolve:callback(autoEvolve)
     bKill:callback(extintionListener)
     AutoEvolveAdj:callback(autoEvolveAdjListener)
-    --PopAdj:callback(PopAdjListener)
-    --MutAdj:callback(MutAdjListener)
-    --EnvAdj:callback(EnvAdjListener)
     janela:redraw()
 end
 
