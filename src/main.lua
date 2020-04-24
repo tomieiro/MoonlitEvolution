@@ -5,11 +5,12 @@ MELHOR = 1
 PIOR = 1
 POPULATION = {}
 F = {}
-MUTACAO = 0.002 --0.2%
+CONST_MUTACAO = 0.002
+MUTACAO = CONST_MUTACAO
 TAM_AMBIENTE = 300
 PONTO = {{0,0},{0,0}}
 MUTACAO_VARIAVEL = true
-TXMVAR = 0.0001
+--TXMVAR = 0.0001
 GERACAO = 0
 MAXY= 25
 RPONTOS = 2
@@ -83,7 +84,6 @@ function instGui()
     botoes:insert(bAutoEvolve,4)
 
     gen = fl.box("rshadow box",410, 5, 180, 26 ,"G: "..tostring(GERACAO))
-    fl.round_clock(605, 5, 30, 30)
     
     BESTI = fl.box("rshadow box",550, 45, 80, 30 ,"Melhor: ".."None")
     BESTI:labelsize(8)
@@ -215,14 +215,18 @@ end
 function confirmaParametrosManual(s)
     TAMPOPULATION = tonumber(popValue:value())
     TAM_AMBIENTE = tonumber(EnvValue:value())
-    s:deactivate()
-    s:hide()
+    CONST_MUTACAO =  tonumber(MutValue:value())
+    MUTACAO = CONST_MUTACAO
+    MutValue:hide()
+    confirmaPop:deactivate()
+    confirmaPop:hide()
     texto:deactivate()
     texto:hide()
     popValue:deactivate()
     popValue:hide()
     EnvValue:deactivate()
     EnvValue:hide()
+    bAuto:hide()
     instGui()
     Base.InitialEnv()
     PONTOS = plotaPontos()
@@ -238,27 +242,50 @@ function confirmaParametrosManual(s)
 end
 
 function confirmaParametrosAutomatico()
-    timer = fl.set_timeout(0.000001,true,evolve)
     confirmaParametrosManual(confirmaPop)
     bStart:hide()
     bEvolve:hide()
     bAutoEvolve:hide()
+    bKill:activate()
+    AutoEvolveAdj:hide()
+    timer = fl.set_timeout(0.1,true,evolve)
 end
 
+function ok()
+    if(popValue:value() == "" or EnvValue:value() == "" or MutValue:value() == "") then return end;
+    if(auto) then
+        confirmaParametrosAutomatico()
+    else
+        confirmaParametrosManual()
+    end
+end
 
+function bAutoC(s)    
+    if(s:value()) then
+        auto = s:value()
+    else
+        auto = false
+    end
+end
 
 ---
+
+
 
 --Funcao main; instacia roda a aplicacao
 function Main()
     local w, h, positions
+    local auto = false
     w,h = 800,600
     janela = fl.double_window(math.floor(w-(w*0.88)), math.floor(h-(h*0.93)), math.floor(w*0.8), math.floor(h*0.9), "MoonlitEvolution")
     texto = fl.box(280, 170, 60, 30, "DIGITE OS PARAMETROS\n\n\n")
     popValue = fl.int_input(280, 200, 60, 40, "TAM POPULACAO  ")
-    EnvValue = fl.int_input(280, 280, 60, 40, "TAM AMBIENTE   ")
-    confirmaPop = fl.button(350, 240, 40, 40, "OK")
-    confirmaPop:callback(confirmaParametrosAutomatico)
+    EnvValue = fl.int_input(280, 250, 60, 40, "TAM AMBIENTE   ")
+    MutValue = fl.float_input(280, 300, 60, 40, "TX MUTACAO     ")
+    confirmaPop = fl.button(390, 250, 60, 40, "OK")
+    bAuto = fl.toggle_button(270, 360, 80, 30, "Automatico")
+    bAuto:callback(bAutoC)
+    confirmaPop:callback(ok)
     janela:done()
     janela:show()
     return fl:run()
