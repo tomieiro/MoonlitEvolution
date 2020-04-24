@@ -1,5 +1,6 @@
 <h1>MoonlitEvolution</h1>
 <h3>Projeto de algoritmos evolutivos usando Lua</h3>
+<br><h3>CORRIGINDO RESOLUCAO... EM ANDAMENTO...</h3>
 <br><br>
 <strong>Este projeto tem por objetivo aplicar -através da linguagem Lua-, com fim de ilustrar, algoritmos evolutivos com uma simples interface,utilizando FLTK.</strong>
 <br><br>
@@ -23,4 +24,4 @@ Para a GUI em Lua, utilizei a lib: MoonFLTK(https://github.com/stetre/moonfltk) 
 <li>Para limpar o binários gerados: <code>make clean</code></li>
 </ul>
 <p> Caso queira ver um video explicando o funcionamento de tudo, acesse o link abaixo:</p>
-:clapper: [Video](gdrive):soon:
+:clapper: [Video](https://drive.google.com/file/d/11F4tG0ZAgTqJqFyvEc7Zeo8o8gk0eFtS/view?usp=sharing)
