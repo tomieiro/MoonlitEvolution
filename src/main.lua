@@ -94,13 +94,13 @@ function instGui()
     MUT = fl.box("rshadow box",550, 115, 80, 30 ,"Mutacao: ".."None")
     MUT:labelsize(8)
 
-    AutoEvolveAdj = fl.slider(550, 155, 30, 110,"FastEvl="..FASTEVOLVE)
+    AutoEvolveAdj = fl.slider(580, 180, 30, 310,"AUTO_GER="..FASTEVOLVE)
     AutoEvolveAdj:slider("gtk thin down box")
     AutoEvolveAdj:bounds(10,10000)
     AutoEvolveAdj:color(fl.DARK3)
     AutoEvolveAdj:type("vertical fill")
     AutoEvolveAdj:value(10)
-    AutoEvolveAdj:labelsize(8)
+    AutoEvolveAdj:labelsize(10)
 
     --[[
     PopAdj = fl.slider(600, 155, 30, 110,"TamPop="..TAMPOPULATION)
@@ -111,7 +111,6 @@ function instGui()
     PopAdj:value(10)
     PopAdj:labelsize(8)
     PopAdj:deactivate()
-    ]]--
 
     EnvAdj = fl.slider(600, 155, 30, 110,"AmbAdj="..TAM_AMBIENTE)
     EnvAdj:slider("gtk thin down box")
@@ -122,7 +121,6 @@ function instGui()
     EnvAdj:labelsize(8)
     
 
-    --[[
     MutAdj = fl.slider(600, 355, 30, 110,"TxMt="..TXMVAR)
     MutAdj:slider("gtk thin down box")
     MutAdj:bounds(0.00001,0.001)
@@ -146,8 +144,8 @@ function startPop()
     THEBEST:redraw()
     MUT:label("Mutacao: "..string.format("%0.4f", MUTACAO))
     MUT:redraw()
-    EnvAdj:label("Amb="..TAM_AMBIENTE)
-    EnvAdj:redraw()
+    --EnvAdj:label("Amb="..TAM_AMBIENTE)
+    --EnvAdj:redraw()
     --MutAdj:label("TxMt="..string.format("%0.4f", TXMVAR))
     --MutAdj:redraw()
     bEvolve:activate()
@@ -155,7 +153,7 @@ function startPop()
     bAutoEvolve:activate()
     bStart:deactivate()
     --PopAdj:deactivate()
-    EnvAdj:deactivate()
+    --EnvAdj:deactivate()
     PONTOS:redraw()
 end
 
@@ -186,12 +184,17 @@ end
 
 function autoEvolveAdjListener(s)
     FASTEVOLVE = math.floor(s:value())
-    s:label("FastEvl:"..FASTEVOLVE)
+    s:label("AUTO_GER="..FASTEVOLVE)
 end
 
 function PopAdjListener(s)
     TAMPOPULATION = math.floor(s:value())
     s:label("TamPop:"..TAMPOPULATION)
+end
+--[[
+function MutAdjListener(s)
+    TXMVAR = s:value()
+    s:label("TxMt:"..string.format("%0.4f", TXMVAR+0.0001))
 end
 
 function EnvAdjListener(s)
@@ -199,11 +202,6 @@ function EnvAdjListener(s)
     s:label("Amb="..TAM_AMBIENTE)
 end
 
---[[
-function MutAdjListener(s)
-    TXMVAR = s:value()
-    s:label("TxMt:"..string.format("%0.4f", TXMVAR+0.0001))
-end
 ]]--
 
 function extintionListener()
@@ -212,14 +210,19 @@ function extintionListener()
     PONTOS:redraw()
 end
 
-function confirmaPopulation(s)
-    TAMPOPULATION = popValue:value()
+
+--Funcao que confirma parametros na tela inicial
+function confirmaParametrosManual(s)
+    TAMPOPULATION = tonumber(popValue:value())
+    TAM_AMBIENTE = tonumber(EnvValue:value())
     s:deactivate()
     s:hide()
     texto:deactivate()
     texto:hide()
     popValue:deactivate()
     popValue:hide()
+    EnvValue:deactivate()
+    EnvValue:hide()
     instGui()
     Base.InitialEnv()
     PONTOS = plotaPontos()
@@ -230,9 +233,19 @@ function confirmaPopulation(s)
     AutoEvolveAdj:callback(autoEvolveAdjListener)
     --PopAdj:callback(PopAdjListener)
     --MutAdj:callback(MutAdjListener)
-    EnvAdj:callback(EnvAdjListener)
+    --EnvAdj:callback(EnvAdjListener)
     janela:redraw()
 end
+
+function confirmaParametrosAutomatico()
+    timer = fl.set_timeout(0.000001,true,evolve)
+    confirmaParametrosManual(confirmaPop)
+    bStart:hide()
+    bEvolve:hide()
+    bAutoEvolve:hide()
+end
+
+
 
 ---
 
@@ -241,10 +254,11 @@ function Main()
     local w, h, positions
     w,h = 800,600
     janela = fl.double_window(math.floor(w-(w*0.88)), math.floor(h-(h*0.93)), math.floor(w*0.8), math.floor(h*0.9), "MoonlitEvolution")
-    texto = fl.box(290, 170, 60, 30, "DIGITE O TAMANHO DA POPULACAO")
-    popValue = fl.int_input(260, 200, 60, 40)
-    confirmaPop = fl.button(330, 200, 40, 40, "OK")
-    confirmaPop:callback(confirmaPopulation)
+    texto = fl.box(280, 170, 60, 30, "DIGITE OS PARAMETROS\n\n\n")
+    popValue = fl.int_input(280, 200, 60, 40, "TAM POPULACAO  ")
+    EnvValue = fl.int_input(280, 280, 60, 40, "TAM AMBIENTE   ")
+    confirmaPop = fl.button(350, 240, 40, 40, "OK")
+    confirmaPop:callback(confirmaParametrosAutomatico)
     janela:done()
     janela:show()
     return fl:run()
