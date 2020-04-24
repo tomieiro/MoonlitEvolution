@@ -23,4 +23,4 @@ Para a GUI em Lua, utilizei a lib: MoonFLTK(https://github.com/stetre/moonfltk).
 <li>Para limpar o binários gerados: <code>make clean</code></li>
 </ul>
 <p> Caso queira ver um video explicando o funcionamento de tudo, acesse o link abaixo:</p>
-[:clapper:](link_drive_em_andamento):soon:
+:clapper: [Video](gdrive):soon:
