@@ -7,7 +7,7 @@
 <br>
 <ul>
 <li><em><strong>(PASSO 1)</strong></em></p>
-Inicialmente, algumas libs são necessárias: liblua5.3-dev(https://www.lua.org/), libfltk1.3-dev(https://www.fltk.org/) e os próprios binarios de lua(https://www.lua.org/).<br><p>Para instalá-las, se estiver no Linux, use: <code>make INSTALL_COMPONENTS</p></code>.
+Inicialmente, algumas libs são necessárias: liblua5.3-dev(https://www.lua.org/), libfltk1.3-dev(https://www.fltk.org/) e os próprios binarios de lua(https://www.lua.org/).<br><p>Para instalá-las, se estiver no Linux, use: <code>make INSTALL_COMPONENTS</p></code>
 </li>
 <br><br>
 <li>
