@@ -16,9 +16,11 @@ Para a GUI em Lua, utilizei a lib: MoonFLTK(https://github.com/stetre/moonfltk).
 </li>
 </ul> 
 <br><br>
-<h5>COMO COMEÇAR A UTILIZAR::grey_question:</h5>
+<h5>COMO COMEÇAR A UTILIZAR:question:</h5>
 <br>
 <ul>
 <li>Para rodar o projeto, utilize o comando: <code>make all</code> ou simplesmente <code>make</code></li>
 <li>Para limpar o binários gerados: <code>make clean</code></li>
 </ul>
+<p> Caso queira ver um video explicando o funcionamento de tudo, acesse o link abaixo:</p>
+[:clapper:](link_drive_em_andamento):soon:
