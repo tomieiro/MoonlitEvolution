@@ -14,7 +14,7 @@ GERACAO = 0
 MAXY= 25
 RPONTOS = 3
 FASTEVOLVE = 10
-
+PRECISION = 6
 
 --OBJETOS DA GUI
 PONTOS = nil
@@ -24,7 +24,7 @@ package.path = package.path..";?.o" --Dizendo que objetos ".o" tambem podem ser 
 local base = require "bin.base"
 local fl = require "moonfltk"
 
-
+--Funcao que plota o grafico na tela
 function plotaGrafico()
     local self = fl.widget_sub(10,45,(1024-15),(768-15))
     self:override_draw(function()
@@ -45,6 +45,7 @@ function plotaGrafico()
     return self
 end
 
+--Funcao que plota os pontos no grafico
 function plotaPontos()
     local self = fl.widget_sub(10,45,(1024-15),(768-15))
     self:override_draw(function()
@@ -63,6 +64,7 @@ function plotaPontos()
     return self
 end
 
+--Funcao que instancia a gui, com seus botoes, sliders e grafico
 function instGui()
     local w, h, positions
     _,_,w,h = fl.screen_xywh()
@@ -127,6 +129,7 @@ function instGui()
     plotaGrafico()
 end
 
+--Funcao que seta parametros iniciais nos elementos na gui
 function startPop()
     GERACAO = 1
     Base.StartPopulation()
@@ -150,6 +153,7 @@ function startPop()
     PONTOS:redraw()
 end
 
+--Funcao que altera os valores dos elementos apos a evolucao e desenha os novos pontos
 function evolve()
     GERACAO = GERACAO + 1
     gen:label("G: "..tostring(GERACAO))
@@ -163,6 +167,8 @@ function evolve()
     PONTOS:redraw()
     janela:redraw()
 end
+
+--Listeners dos botoes da gui
 
 function autoEvolve()
     for i=1, FASTEVOLVE do
@@ -198,6 +204,9 @@ function extintionListener()
     PONTOS:redraw()
 end
 
+---
+
+--Funcao main; instacia roda a aplicacao
 function Main()
     instGui()
     Base.InitialEnv()
