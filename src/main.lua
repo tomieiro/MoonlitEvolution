@@ -26,17 +26,17 @@ local fl = require "moonfltk"
 
 --Funcao que plota o grafico na tela
 function plotaGrafico()
-    local self = fl.widget_sub(10,45,(1024-15),(768-15))
+    local self = fl.widget_sub(10,45,(800-15),(600-15))
     self:override_draw(function()
-        fl.push_clip(10,45,(1024-15),(768-15))
+        fl.push_clip(10,45,(550-15),(500-15))
         fl.color(fl.DARK3)
-        fl.rectf(10,45,(1024-15),(768-15))
+        fl.rectf(10,45,(800-15),(600-15))
         fl.push_matrix()
         fl.translate(8,200)
         fl.color(fl.BLACK)
         fl.begin_line()
         for i=0, TAM_AMBIENTE, 0.1 do
-            fl.vertex(fl.transform_x(i*(TAM_AMBIENTE/(10*(TAM_AMBIENTE/100)^2)),i),420+(-fl.transform_y(Base.FxEq(i),Base.FxEq(i)*(TAM_AMBIENTE/((TAM_AMBIENTE*1.8)/MAXY)))))
+            fl.vertex(fl.transform_x(i*(TAM_AMBIENTE/(19*(TAM_AMBIENTE/100)^2)),i),295+(-fl.transform_y(Base.FxEq(i),Base.FxEq(i)*(TAM_AMBIENTE/((TAM_AMBIENTE*2.8)/MAXY)))))
         end
         fl.end_line()
         fl.pop_matrix()
@@ -47,17 +47,17 @@ end
 
 --Funcao que plota os pontos no grafico
 function plotaPontos()
-    local self = fl.widget_sub(10,45,(1024-15),(768-15))
+    local self = fl.widget_sub(10,45,(800-15),(600-15))
     self:override_draw(function()
-        fl.push_clip(10,45,(1024-15),(768-15))
+        fl.push_clip(10,45,(800-15),(600-15))
         fl.push_matrix()
         fl.translate(8,200)
         fl.color(fl.RED)
         for i=1, TAMPOPULATION do
-            fl.circle(fl.transform_x(POPULATION[i]*(TAM_AMBIENTE/(10*(TAM_AMBIENTE/100)^2)),POPULATION[i]),420+(-fl.transform_y(F[i],F[i]*(TAM_AMBIENTE/((TAM_AMBIENTE*1.8)/MAXY)))),RPONTOS)
+            fl.circle(fl.transform_x(POPULATION[i]*(TAM_AMBIENTE/(19*(TAM_AMBIENTE/100)^2)),POPULATION[i]),295+(-fl.transform_y(F[i],F[i]*(TAM_AMBIENTE/((TAM_AMBIENTE*2.8)/MAXY)))),RPONTOS)
         end
         fl.color(fl.YELLOW)
-        fl.circle(fl.transform_x(THEBESTOFTHEBEST[1]*(TAM_AMBIENTE/(10*(TAM_AMBIENTE/100)^2)),THEBESTOFTHEBEST[1]),420+(-fl.transform_y(THEBESTOFTHEBEST[2],THEBESTOFTHEBEST[2]*(TAM_AMBIENTE/((TAM_AMBIENTE*1.8)/MAXY)))),RPONTOS)
+        fl.circle(fl.transform_x(THEBESTOFTHEBEST[1]*(TAM_AMBIENTE/(19*(TAM_AMBIENTE/100)^2)),THEBESTOFTHEBEST[1]),295+(-fl.transform_y(THEBESTOFTHEBEST[2],THEBESTOFTHEBEST[2]*(TAM_AMBIENTE/((TAM_AMBIENTE*2.8)/MAXY)))),RPONTOS)
         fl.pop_matrix()
         fl.pop_clip()
     end)
@@ -67,7 +67,7 @@ end
 --Funcao que instancia a gui, com seus botoes, sliders e grafico
 function instGui()
     local w, h, positions
-    _,_,w,h = fl.screen_xywh()
+    w,h = 800,600
     janela = fl.double_window(math.floor(w-(w*0.88)), math.floor(h-(h*0.93)), math.floor(w*0.8), math.floor(h*0.9), "MoonlitEvolution")
     --Instanciando objetos na tela
     botoes = fl.group(5,5,math.floor(w*0.8),math.floor(h*0.9))

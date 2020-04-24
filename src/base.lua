@@ -88,13 +88,13 @@ function Base.Evolve()
       else
           MUTACAO = 0.002
       end
-      if MUTACAO > 100000 then --saturacao
+      if MUTACAO > 100 then --saturacao
           Base.Extincao()
       end
   end
   PONTO[2] = PONTO[1]
   if((GERACAO%10) == 0) then Base.Predacao() end
-  return 
+  return
 end
 
 return Base

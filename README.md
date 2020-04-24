@@ -12,7 +12,7 @@ Inicialmente, algumas libs são necessárias: liblua5.3-dev(https://www.lua.org/
 <br><br>
 <li>
 <p><em><strong>(PASSO 2)</strong></em></p>
-Para a GUI em Lua, utilizei a lib: MoonFLTK(https://github.com/stetre/moonfltk). Acesse o link da moonfltk, citado acima, para instalar o módulo. O passo-a-passo está na página do repositorio e ele não possui depencias externas fora as já instaladas pelo <code>make INSTALL_COMPONENTS</code>.
+Para a GUI em Lua, utilizei a lib: MoonFLTK(https://github.com/stetre/moonfltk) by Stefano Trettel. Acesse o link da moonfltk, citado acima, para instalar o módulo. O passo-a-passo está na página do repositorio e ele não possui depencias externas fora as já instaladas pelo <code>make INSTALL_COMPONENTS</code>.
 </li>
 </ul> 
 <br><br>
