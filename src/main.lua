@@ -68,7 +68,6 @@ end
 function instGui()
     local w, h, positions
     w,h = 800,600
-    janela = fl.double_window(math.floor(w-(w*0.88)), math.floor(h-(h*0.93)), math.floor(w*0.8), math.floor(h*0.9), "MoonlitEvolution")
     --Instanciando objetos na tela
     botoes = fl.group(5,5,math.floor(w*0.8),math.floor(h*0.9))
     bStart = fl.button(10,5,70,30,"Start")
@@ -103,6 +102,7 @@ function instGui()
     AutoEvolveAdj:value(10)
     AutoEvolveAdj:labelsize(8)
 
+    --[[
     PopAdj = fl.slider(600, 155, 30, 110,"TamPop="..TAMPOPULATION)
     PopAdj:slider("gtk thin down box")
     PopAdj:bounds(10,1000)
@@ -111,8 +111,9 @@ function instGui()
     PopAdj:value(10)
     PopAdj:labelsize(8)
     PopAdj:deactivate()
+    ]]--
 
-    EnvAdj = fl.slider(550, 355, 30, 110,"AmbAdj="..TAM_AMBIENTE)
+    EnvAdj = fl.slider(600, 155, 30, 110,"AmbAdj="..TAM_AMBIENTE)
     EnvAdj:slider("gtk thin down box")
     EnvAdj:bounds(10,1000)
     EnvAdj:color(fl.DARK3)
@@ -120,14 +121,17 @@ function instGui()
     EnvAdj:value(10)
     EnvAdj:labelsize(8)
     
+
+    --[[
     MutAdj = fl.slider(600, 355, 30, 110,"TxMt="..TXMVAR)
     MutAdj:slider("gtk thin down box")
     MutAdj:bounds(0.00001,0.001)
     MutAdj:color(fl.DARK3)
     MutAdj:type("vertical fill")
-    MutAdj:value(10)
+    MutAdj:value(0.00001)
     MutAdj:labelsize(8) 
-
+    ]]--
+    janela:insert(botoes,1)
     plotaGrafico()
 end
 
@@ -144,13 +148,13 @@ function startPop()
     MUT:redraw()
     EnvAdj:label("Amb="..TAM_AMBIENTE)
     EnvAdj:redraw()
-    MutAdj:label("TxMt="..string.format("%0.4f", TXMVAR))
-    MutAdj:redraw()
+    --MutAdj:label("TxMt="..string.format("%0.4f", TXMVAR))
+    --MutAdj:redraw()
     bEvolve:activate()
     bKill:activate()
     bAutoEvolve:activate()
     bStart:deactivate()
-    PopAdj:deactivate()
+    --PopAdj:deactivate()
     EnvAdj:deactivate()
     PONTOS:redraw()
 end
@@ -195,10 +199,12 @@ function EnvAdjListener(s)
     s:label("Amb="..TAM_AMBIENTE)
 end
 
+--[[
 function MutAdjListener(s)
     TXMVAR = s:value()
-    s:label("TxMt:"..string.format("%0.4f", TXMVAR))
+    s:label("TxMt:"..string.format("%0.4f", TXMVAR+0.0001))
 end
+]]--
 
 function extintionListener()
     Base.Extincao()
@@ -206,23 +212,39 @@ function extintionListener()
     PONTOS:redraw()
 end
 
----
-
---Funcao main; instacia roda a aplicacao
-function Main()
+function confirmaPopulation(s)
+    TAMPOPULATION = popValue:value()
+    s:deactivate()
+    s:hide()
+    texto:deactivate()
+    texto:hide()
+    popValue:deactivate()
+    popValue:hide()
     instGui()
     Base.InitialEnv()
     PONTOS = plotaPontos()
-
     bStart:callback(startPop)
     bEvolve:callback(evolve)
     bAutoEvolve:callback(autoEvolve)
     bKill:callback(extintionListener)
     AutoEvolveAdj:callback(autoEvolveAdjListener)
-    PopAdj:callback(PopAdjListener)
-    MutAdj:callback(MutAdjListener)
+    --PopAdj:callback(PopAdjListener)
+    --MutAdj:callback(MutAdjListener)
     EnvAdj:callback(EnvAdjListener)
-    
+    janela:redraw()
+end
+
+---
+
+--Funcao main; instacia roda a aplicacao
+function Main()
+    local w, h, positions
+    w,h = 800,600
+    janela = fl.double_window(math.floor(w-(w*0.88)), math.floor(h-(h*0.93)), math.floor(w*0.8), math.floor(h*0.9), "MoonlitEvolution")
+    texto = fl.box(290, 170, 60, 30, "DIGITE O TAMANHO DA POPULACAO")
+    popValue = fl.int_input(260, 200, 60, 40)
+    confirmaPop = fl.button(330, 200, 40, 40, "OK")
+    confirmaPop:callback(confirmaPopulation)
     janela:done()
     janela:show()
     return fl:run()
