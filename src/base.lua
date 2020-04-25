@@ -64,7 +64,8 @@ end
 --Funcao que extingue uma populacao
 function Base.Extincao()
   Base.StartPopulation()
-  MUTACAO = 0.002
+  MUTACAO = CONST_MUTACAO
+  GERACAO = 1
 end
 
 --Funcao que preda o pior da geracao
@@ -86,7 +87,7 @@ function Base.Evolve()
       if math.abs(dy/dx) <= 0.02 and math.abs(dy/dx) ~= 0 then --trancou
           MUTACAO = MUTACAO * 2
       else
-          MUTACAO = 0.002
+          MUTACAO = CONST_MUTACAO
       end
       if MUTACAO > 100 then --saturacao
           Base.Extincao()
