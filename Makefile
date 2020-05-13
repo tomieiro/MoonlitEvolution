@@ -7,7 +7,8 @@ compile:
 
 INSTALL_COMPONENTS:
 	sudo apt install lua5.3 libfltk1.3-dev
-	./install_lib_lua.sh
+	sudo chmod a+x install_libs_aux.sh
+	./install_libs_aux.sh
 clean:
 	@rm bin/*.o
 	@echo "Cleaned!"

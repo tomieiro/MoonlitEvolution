@@ -8,5 +8,5 @@ cd moonfltk
 make
 sudo make install
 cd ..
-rm -r lua-5.3.5 moonfltk
+sudo rm -rf lua-5.3.5 moonfltk
 echo "Todos componentes instalados!"
