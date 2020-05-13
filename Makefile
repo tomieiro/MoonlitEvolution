@@ -6,8 +6,8 @@ compile:
 	@luac5.3 -o bin/main.o src/main.lua
 
 INSTALL_COMPONENTS:
-	sudo apt install lua5.3 liblua5.3-dev libfltk1.3-dev
-
+	sudo apt install lua5.3 libfltk1.3-dev
+	./install_lib_lua.sh
 clean:
 	@rm bin/*.o
 	@echo "Cleaned!"
