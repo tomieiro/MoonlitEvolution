@@ -25,4 +25,4 @@ Para a GUI em Lua, utilizei a lib: MoonFLTK(https://github.com/stetre/moonfltk) 
 </ul>
 <p> Caso queira ver um video explicando o funcionamento de tudo, acesse o link abaixo:</p>
 :clapper: VIDEO
-<iframe src="https://drive.google.com/file/d/1uBnNFgFalPvrJXlP3LmODw1E4Y-PyXrS/preview" width="640" height="480"></iframe>
+(https://drive.google.com/file/d/1uBnNFgFalPvrJXlP3LmODw1E4Y-PyXrS/preview)
