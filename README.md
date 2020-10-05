@@ -1,7 +1,6 @@
 <h1>MoonlitEvolution</h1>
 <h3>Projeto de algoritmos evolutivos usando Lua</h3>
-<p><img src="https://www.andreas-rozek.de/Lua/Lua-Logo_32x32.png" alt="lua_logo"/> Lua: https://www.lua.org/<p>
-
+<p><img src="https://www.andreas-rozek.de/Lua/Lua-Logo_32x32.png" alt="lua_logo"/ align="center"><t>Lua: https://www.lua.org/<p>
 <br><br>
 <strong>Este projeto tem por objetivo aplicar -através da linguagem Lua-, com fim de ilustrar, algoritmos evolutivos com uma simples interface,utilizando FLTK.</strong>
 <br><br>
